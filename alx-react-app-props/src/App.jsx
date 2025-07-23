@@ -2,6 +2,8 @@
 import { UserProvider } from './context/UserContext.jsx';
 import UserProfile from './components/UserProfile';
 
+["UserContext.Provider", "value"]
+
 function App() {
   return (
     <UserProvider>
