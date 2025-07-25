@@ -1,36 +1,30 @@
-
-import { useParams, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import useRecipeStore from '../store/useRecipeStore';
-import EditRecipeForm from './EditRecipeForm';
-import DeleteRecipeButton from './DeleteRecipeButton';
-import { useState } from 'react';
 
-const RecipeDetails = () => {
+const RecipeDetail = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const recipe = useRecipeStore((state) =>
-    state.recipes.find((r) => r.id === parseInt(id))
+  const recipe = useRecipeStore(state =>
+    state.recipes.find(r => r.id.toString() === id)
   );
 
-  const [isEditing, setIsEditing] = useState(false);
-
-  if (!recipe) return <p>Recipe not found</p>;
+  if (!recipe) return <p className="text-center">Recipe not found.</p>;
 
   return (
-    <div>
-      <h1>{recipe.title}</h1>
-      <p>{recipe.description}</p>
-
-      {isEditing ? (
-        <EditRecipeForm recipe={recipe} onFinish={() => setIsEditing(false)} />
-      ) : (
-        <>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
-          <DeleteRecipeButton recipeId={recipe.id} onDeleted={() => navigate('/')} />
-        </>
-      )}
+    <div className="p-4">
+      <h2 className="text-2xl font-bold">{recipe.title}</h2>
+      <p className="text-sm text-gray-500">
+        Category: {recipe.category} | Difficulty: {recipe.difficulty}
+      </p>
+      <p className="mt-2">{recipe.description}</p>
+      <ul className="list-disc ml-6 mt-4">
+        {recipe.ingredients.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+      <p className="mt-4 text-sm">Cook Time: {recipe.cookTime} mins</p>
     </div>
   );
 };
 
-export default RecipeDetails;
+export default RecipeDetail;
