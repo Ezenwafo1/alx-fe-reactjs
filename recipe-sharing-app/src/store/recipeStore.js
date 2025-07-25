@@ -2,28 +2,42 @@ import { create } from 'zustand';
 
 const useRecipeStore = create((set, get) => ({
   recipes: [],
-  searchTerm: '',
   filteredRecipes: [],
+  searchTerm: '',
+  selectedCategory: 'All',
+  selectedDifficulty: 'All',
 
-  // Action to set search term
   setSearchTerm: (term) => {
     set({ searchTerm: term });
-    get().filterRecipes(); // Automatically filter when search term updates
+    get().filterRecipes();
   },
 
-  // Action to filter recipes based on search term
-  filterRecipes: () => {
-    const { recipes, searchTerm } = get();
-    const filtered = recipes.filter(recipe =>
-      recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    set({ filteredRecipes: filtered });
+  setCategory: (category) => {
+    set({ selectedCategory: category });
+    get().filterRecipes();
   },
 
-  // Optional: A method to set all recipes and auto-filter
+  setDifficulty: (difficulty) => {
+    set({ selectedDifficulty: difficulty });
+    get().filterRecipes();
+  },
+
   setRecipes: (newRecipes) => {
     set({ recipes: newRecipes });
     get().filterRecipes();
+  },
+
+  filterRecipes: () => {
+    const { recipes, searchTerm, selectedCategory, selectedDifficulty } = get();
+
+    const filtered = recipes.filter(recipe => {
+      const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
+      const matchesDifficulty = selectedDifficulty === 'All' || recipe.difficulty === selectedDifficulty;
+      return matchesSearch && matchesCategory && matchesDifficulty;
+    });
+
+    set({ filteredRecipes: filtered });
   }
 }));
 
