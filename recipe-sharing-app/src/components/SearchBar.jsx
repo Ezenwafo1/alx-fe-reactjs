@@ -6,13 +6,13 @@ const SearchBar = () => {
   const setSearchTerm = useRecipeStore(state => state.setSearchTerm);
 
   return (
-    <div className="px-4 py-2">
+    <div className="w-full mb-4">
       <input
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search recipes..."
-        className="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+        placeholder="Search by title, e.g. 'Jollof' or 'Fruit Salad'"
+        className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-orange-400"
       />
     </div>
   );
