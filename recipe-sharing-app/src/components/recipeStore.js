@@ -1,26 +1,44 @@
 import { create } from 'zustand';
-import useRecipeStore from '../store/useRecipeStore';
 
-export const useRecipeStore = create((set) => ({
+const useRecipeStore = create((set, get) => ({
   recipes: [],
+  filteredRecipes: [],
+  searchTerm: '',
+  selectedCategory: 'All',
+  selectedDifficulty: 'All',
 
-  // ✅ Add a recipe
-  addRecipe: (newRecipe) =>
-    set((state) => ({
-      recipes: [...state.recipes, newRecipe],
-    })),
+  setSearchTerm: (term) => {
+    set({ searchTerm: term });
+    get().filterRecipes();
+  },
 
-  // ✅ Delete a recipe by ID
-  deleteRecipe: (id) =>
-    set((state) => ({
-      recipes: state.recipes.filter((recipe) => recipe.id !== id),
-    })),
+  setCategory: (category) => {
+    set({ selectedCategory: category });
+    get().filterRecipes();
+  },
 
-  // ✅ Update an existing recipe
-  updateRecipe: (updatedRecipe) =>
-    set((state) => ({
-      recipes: state.recipes.map((recipe) =>
-        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-      ),
-    })),
+  setDifficulty: (difficulty) => {
+    set({ selectedDifficulty: category });
+    get().filterRecipes();
+  },
+
+  setRecipes: (recipes) => {
+    set({ recipes });
+    get().filterRecipes();
+  },
+
+  filterRecipes: () => {
+    const { recipes, searchTerm, selectedCategory, selectedDifficulty } = get();
+
+    const filtered = recipes.filter(recipe => {
+      const matchesSearch = recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
+      const matchesDifficulty = selectedDifficulty === 'All' || recipe.difficulty === selectedDifficulty;
+      return matchesSearch && matchesCategory && matchesDifficulty;
+    });
+
+    set({ filteredRecipes: filtered });
+  }
 }));
+
+export default useRecipeStore;
