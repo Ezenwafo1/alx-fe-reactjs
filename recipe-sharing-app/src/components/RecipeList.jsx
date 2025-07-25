@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { useRecipeStore } from '../store/recipeStore';
+import EditRecipeForm from './EditRecipeForm';
 
 const RecipeList = () => {
   const recipes = useRecipeStore((state) => state.recipes);
   const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
+  const [editingId, setEditingId] = useState(null);
 
   return (
     <div>
@@ -21,23 +24,44 @@ const RecipeList = () => {
               position: 'relative',
             }}
           >
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-            <button
-              style={{
-                position: 'absolute',
-                top: '0.5rem',
-                right: '0.5rem',
-                background: '#ff4d4d',
-                color: '#fff',
-                border: 'none',
-                padding: '0.25rem 0.5rem',
-                cursor: 'pointer',
-              }}
-              onClick={() => deleteRecipe(recipe.id)}
-            >
-              Delete
-            </button>
+            {editingId === recipe.id ? (
+              <EditRecipeForm recipe={recipe} onFinish={() => setEditingId(null)} />
+            ) : (
+              <>
+                <h3>{recipe.title}</h3>
+                <p>{recipe.description}</p>
+                <button
+                  onClick={() => deleteRecipe(recipe.id)}
+                  style={{
+                    position: 'absolute',
+                    top: '0.5rem',
+                    right: '0.5rem',
+                    background: '#ff4d4d',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '0.25rem 0.5rem',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => setEditingId(recipe.id)}
+                  style={{
+                    position: 'absolute',
+                    top: '0.5rem',
+                    right: '4.5rem',
+                    background: '#ffa500',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '0.25rem 0.5rem',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Edit
+                </button>
+              </>
+            )}
           </div>
         ))
       )}
