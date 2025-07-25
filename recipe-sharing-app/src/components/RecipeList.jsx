@@ -4,7 +4,7 @@ import EditRecipeForm from './EditRecipeForm';
 import { Link } from 'react-router-dom';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
+ const recipes = useRecipeStore(state => state.filteredRecipes);
   const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
 <<<<<<< HEAD
   const [editingId, setEditingId] = useState(null);
