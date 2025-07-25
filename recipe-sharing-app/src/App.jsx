@@ -1,22 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import RecipeDetails from './components/RecipeDetails';
-import EditRecipeForm from './components/EditRecipeForm';
-import Navbar from './components/Navbar';
+import SearchBar from './components/SearchBar';
 
-const App = () => {
+function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/recipe/:id" element={<RecipeDetails />} />
-        <Route path="/edit/:id" element={<EditRecipeForm />} />
-        {/* Add more routes as needed */}
-      </Routes>
-    </Router>
+    <div>
+      <h1 className="text-3xl font-bold text-center mt-4">Recipe Sharing App</h1>
+      <SearchBar />
+      <RecipeList />
+    </div>
   );
-};
-
-export default App;
+}
