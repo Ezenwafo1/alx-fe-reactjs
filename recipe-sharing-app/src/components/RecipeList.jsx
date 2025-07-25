@@ -6,7 +6,10 @@ import { Link } from 'react-router-dom';
 const RecipeList = () => {
   const recipes = useRecipeStore((state) => state.recipes);
   const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
+<<<<<<< HEAD
   const [editingId, setEditingId] = useState(null);
+=======
+>>>>>>> a1c7041 (added react-router-dom)
 
   return (
     <div>
@@ -25,6 +28,7 @@ const RecipeList = () => {
               position: 'relative',
             }}
           >
+<<<<<<< HEAD
             {editingId === recipe.id ? (
               <EditRecipeForm recipe={recipe} onFinish={() => setEditingId(null)} />
             ) : (
@@ -63,6 +67,25 @@ const RecipeList = () => {
                 </button>
               </>
             )}
+=======
+            <h3>{recipe.title}</h3>
+            <p>{recipe.description}</p>
+            <button
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                right: '0.5rem',
+                background: '#ff4d4d',
+                color: '#fff',
+                border: 'none',
+                padding: '0.25rem 0.5rem',
+                cursor: 'pointer',
+              }}
+              onClick={() => deleteRecipe(recipe.id)}
+            >
+              Delete
+            </button>
+>>>>>>> a1c7041 (added react-router-dom)
           </div>
         ))
       )}
