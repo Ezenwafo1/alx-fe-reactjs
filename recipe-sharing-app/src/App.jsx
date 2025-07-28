@@ -1,5 +1,6 @@
 // src/App.jsx
 import React from 'react';
+import RecipeDetail from './components/RecipeDetails';
 import AddRecipeForm from './components/AddRecipeForm'; // ✅ This was missing
 import RecipeList from './components/RecipeList';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
