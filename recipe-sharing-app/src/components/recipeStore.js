@@ -44,6 +44,7 @@ const useRecipeStore = create((set, get) => ({
       );
       return { recommendations: recommended };
     }),
+    setRecipes: (recipes) => set({ recipes });
 }));
 
 export default useRecipeStore;
