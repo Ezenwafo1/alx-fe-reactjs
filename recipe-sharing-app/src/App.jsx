@@ -1,6 +1,8 @@
 // src/App.jsx
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React from 'react';
+import AddRecipeForm from './components/AddRecipeForm'; // ✅ This was missing
 import RecipeList from './components/RecipeList';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import FavoritesList from './components/FavoritesList';
 import RecommendationsList from './components/RecommendationsList';
 
