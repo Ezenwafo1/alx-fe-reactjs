@@ -17,6 +17,7 @@ const RecipeDetail = () => {
         Category: {recipe.category} | Difficulty: {recipe.difficulty}
       </p>
       <p className="mt-2">{recipe.description}</p>
+      <p><strong>Recipe ID:</strong> {recipe.id}</p>
       <ul className="list-disc ml-6 mt-4">
         {recipe.ingredients.map((item, index) => (
           <li key={index}>{item}</li>
