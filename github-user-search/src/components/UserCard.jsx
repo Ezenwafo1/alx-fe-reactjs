@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchGitHubUser } from '../services/githubService';
+import { fetchUserData } from '../services/githubService';
 
 function UserCard() {
   const { username } = useParams();
@@ -10,14 +10,15 @@ function UserCard() {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const data = await fetchGitHubUser(username);
+        const data = await fetchUserData(username);
         setUser(data);
         setError('');
       } catch (err) {
-        setError(err.message);
+        setError(err.message || 'User not found');
         setUser(null);
       }
     };
+
     loadUser();
   }, [username]);
 
