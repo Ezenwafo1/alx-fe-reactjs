@@ -11,6 +11,7 @@ function App() {
   );
 }
 
+
 // Separate component to use `useNavigate` (hooks can't be used directly in top-level component)
 function Main() {
   const navigate = useNavigate();
