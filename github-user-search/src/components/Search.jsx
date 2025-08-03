@@ -2,108 +2,149 @@ import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
 const Search = () => {
-  const [username, setUsername] = useState('');
-  const [user, setUser] = useState(null);
+  const [form, setForm] = useState({
+    username: '',
+    location: '',
+    minRepos: '',
+  });
+
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [page, setPage] = useState(1); // for pagination
+  const [hasMore, setHasMore] = useState(false);
 
   const handleChange = (e) => {
-    setUsername(e.target.value);
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username.trim() === '') return;
+    setUsers([]);
+    setPage(1);
+    await loadUsers(1, true);
+  };
 
+  const loadUsers = async (currentPage, replace = false) => {
     setLoading(true);
     setError('');
-    setUser(null);
 
     try {
-      const data = await fetchUserData(username.trim());
-      setUser(data);
+      const result = await fetchUserData({ ...form, page: currentPage });
+
+      if (replace) {
+        setUsers(result.users);
+      } else {
+        setUsers((prev) => [...prev, ...result.users]);
+      }
+
+      setHasMore(result.hasMore);
     } catch (err) {
-      setError('Looks like we cant find the user'); // ✅ Corrected message
+      setError('Looks like we cant find the user');
     } finally {
       setLoading(false);
     }
   };
 
+  const handleLoadMore = async () => {
+    const nextPage = page + 1;
+    await loadUsers(nextPage);
+    setPage(nextPage);
+  };
+
   return (
-    <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="text"
-          placeholder="Enter GitHub username"
-          value={username}
-          onChange={handleChange}
-          style={styles.input}
-        />
-        <button type="submit" style={styles.button}>Search</button>
+    <div className="max-w-2xl w-full mx-auto mt-6 p-4 bg-white rounded shadow">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">GitHub Username</label>
+          <input
+            type="text"
+            name="username"
+            value={form.username}
+            onChange={handleChange}
+            className="mt-1 w-full p-2 border rounded"
+            placeholder="e.g., torvalds"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Location (optional)</label>
+          <input
+            type="text"
+            name="location"
+            value={form.location}
+            onChange={handleChange}
+            className="mt-1 w-full p-2 border rounded"
+            placeholder="e.g., Nigeria"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Minimum Repositories (optional)</label>
+          <input
+            type="number"
+            name="minRepos"
+            value={form.minRepos}
+            onChange={handleChange}
+            className="mt-1 w-full p-2 border rounded"
+            placeholder="e.g., 10"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+        >
+          Search
+        </button>
       </form>
 
-      {/* Conditional Rendering */}
-      {loading && <p style={styles.message}>Loading...</p>}
-      {error && <p style={{ ...styles.message, color: 'red' }}>{error}</p>}
-      {user && (
-        <div style={styles.card}>
-          <img src={user.avatar_url} alt={user.login} style={styles.avatar} />
-          <h2>{user.name || user.login}</h2>
-          <a href={user.html_url} target="_blank" rel="noreferrer">
-            View GitHub Profile
-          </a>
+      {loading && <p className="text-center mt-4">Loading...</p>}
+      {error && <p className="text-center text-red-600 mt-4">{error}</p>}
+
+      {users.length > 0 && (
+        <div className="mt-6 space-y-4">
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className="flex items-center gap-4 border p-4 rounded shadow-sm"
+            >
+              <img
+                src={user.avatar_url}
+                alt={user.login}
+                className="w-16 h-16 rounded-full"
+              />
+              <div>
+                <h3 className="text-lg font-semibold">{user.login}</h3>
+                <p className="text-sm text-gray-600">Location: {user.location || 'N/A'}</p>
+                <p className="text-sm text-gray-600">Repos: {user.public_repos}</p>
+                <a
+                  href={user.html_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-600 hover:underline text-sm"
+                >
+                  View GitHub Profile
+                </a>
+              </div>
+            </div>
+          ))}
+
+          {hasMore && (
+            <button
+              onClick={handleLoadMore}
+              className="block w-full bg-gray-800 text-white py-2 mt-4 rounded hover:bg-gray-700"
+            >
+              Load More
+            </button>
+          )}
         </div>
       )}
     </div>
   );
-};
-
-// Inline styles
-const styles = {
-  container: {
-    width: '100%',
-    maxWidth: '400px',
-    margin: '0 auto',
-    textAlign: 'center',
-  },
-  form: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
-    marginBottom: '20px',
-  },
-  input: {
-    padding: '8px',
-    fontSize: '16px',
-    flex: '1',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-  },
-  button: {
-    padding: '8px 16px',
-    fontSize: '16px',
-    backgroundColor: '#24292e',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  card: {
-    padding: '1.5rem',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    backgroundColor: '#fff',
-    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-  },
-  avatar: {
-    width: '100px',
-    borderRadius: '50%',
-    marginBottom: '1rem',
-  },
-  message: {
-    fontSize: '16px',
-    marginTop: '10px',
-  },
 };
 
 export default Search;
