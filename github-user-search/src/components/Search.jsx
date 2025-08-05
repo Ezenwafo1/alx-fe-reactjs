@@ -93,10 +93,13 @@ const Search = () => {
             placeholder="e.g., 10"
           />
         </div>
-
-       <button className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all">
+<button
+  onClick={handleSearch}
+  className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all"
+>
   Search
 </button>
+
 
       </form>
 
