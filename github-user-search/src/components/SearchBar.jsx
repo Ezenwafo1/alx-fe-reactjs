@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fetchUserData } from '../services/githubService';
 
 function SearchBar() {
   const [username, setUsername] = useState('');
