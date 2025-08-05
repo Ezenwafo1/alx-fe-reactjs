@@ -94,12 +94,10 @@ const Search = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
-        >
-          Search
-        </button>
+       <button className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all">
+  Search
+</button>
+
       </form>
 
       {loading && <p className="text-center mt-4">Loading...</p>}
