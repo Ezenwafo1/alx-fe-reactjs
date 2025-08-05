@@ -19,7 +19,7 @@ function Main() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-900 flex items-center justify-center px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-center px-4">
       <div className="bg-gray-800 p-8 rounded-xl w-full max-w-2xl text-white text-center shadow-lg">
         <h1 className="text-4xl font-bold mb-6">GitHub User Search</h1>
         <Search onSearch={handleSearch} />
