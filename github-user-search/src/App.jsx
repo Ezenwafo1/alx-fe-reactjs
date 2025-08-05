@@ -11,7 +11,6 @@ function App() {
   );
 }
 
-// Separate component to use `useNavigate` (hooks can't be used directly in top-level component)
 function Main() {
   const navigate = useNavigate();
 
@@ -20,19 +19,8 @@ function Main() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingTop: '3rem',
-        backgroundColor: '#f9f9f9',
-        fontFamily: 'Arial, sans-serif',
-      }}
-    >
-      <h1 style={{ textAlign: 'center' }}>GitHub User Search</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gray-900 text-white font-sans">
+      <h1 className="text-3xl font-bold mb-6 text-center">GitHub User Search</h1>
       <Search onSearch={handleSearch} />
       <Routes>
         <Route path="/user/:username" element={<UserCard />} />
