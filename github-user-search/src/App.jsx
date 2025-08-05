@@ -19,12 +19,14 @@ function Main() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-gray-900 text-white font-sans">
-      <h1 className="text-3xl font-bold mb-6 text-center">GitHub User Search</h1>
-      <Search onSearch={handleSearch} />
-      <Routes>
-        <Route path="/user/:username" element={<UserCard />} />
-      </Routes>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white px-4 font-sans">
+      <div className="w-full max-w-2xl text-center">
+        <h1 className="text-4xl font-bold mb-6">GitHub User Search</h1>
+        <Search onSearch={handleSearch} />
+        <Routes>
+          <Route path="/user/:username" element={<UserCard />} />
+        </Routes>
+      </div>
     </div>
   );
 }
