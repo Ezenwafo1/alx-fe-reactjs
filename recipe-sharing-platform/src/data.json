@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+    "image": "https://www.culinaryhill.com/wp-content/uploads/2021/12/Spaghetti-Carbonara-Culinary-Hill-1200x800-1.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Chicken Tikka Masala",
+    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
+    "image": "https://realfood.tesco.com/media/images/1400x919-Chicken-tikka-masala-43fcdbd8-eb86-4b55-951d-adda29067afa-0-1400x919.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Bitterleave Soup",
+    "summary": "Chunks of Goat meat, Cow head, dry catfish, stock fish, snail cooked with a cocoyam puree or thickener & creamy.",
+    "image": "https://wigmoretrading.com/wp-content/uploads/2024/08/Bitterleaf-Soup.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Nsala Soup",
+    "summary": "Chunks of grilled chicken, catfish, stockfish, Goatmeat cooked utazi leave with yam pureee as thickener.",
+    "image": "https://i.ytimg.com/vi/tIjwSMTkRzI/maxresdefault.jpg"
+  }
+]
