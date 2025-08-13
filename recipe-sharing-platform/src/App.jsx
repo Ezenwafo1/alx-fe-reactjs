@@ -3,6 +3,9 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import HomePage from "./Components/HomePage.jsx"; 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import RecipeDetail from './components/RecipeDetail';
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -32,4 +35,14 @@ function App() {
   );
 }
 
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/recipe/:id" element={<RecipeDetail />} />
+      </Routes>
+    </Router>
+  );
+}
 export default App;
