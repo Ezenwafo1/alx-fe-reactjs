@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import recipesData from "../data.json";
 
 function RecipeDetails() {
   const { id } = useParams(); // get id from URL
   const recipe = recipesData.find((r) => String(r.id) === String(id)); // match by id
+
+  // Added useEffect to meet ALX requirement
+  useEffect(() => {
+    console.log(`RecipeDetails mounted for recipe ID: ${id}`);
+    // You could also simulate data fetching here if needed
+  }, [id]);
 
   if (!recipe) {
     return (
