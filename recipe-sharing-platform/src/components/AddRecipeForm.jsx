@@ -1,4 +1,3 @@
-// src/components/AddRecipeForm.jsx
 import React, { useState } from "react";
 
 function AddRecipeForm({ onAddRecipe }) {
@@ -7,14 +6,12 @@ function AddRecipeForm({ onAddRecipe }) {
   const [steps, setSteps] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  // ✅ Add a validate function
+  const validate = () => {
     const ingredientList = ingredients.split("\n").filter(Boolean);
     const stepsList = steps.split("\n").filter(Boolean);
-
-    // Validation
     const newErrors = {};
+
     if (!title.trim()) newErrors.title = "Title is required";
     if (ingredientList.length < 2)
       newErrors.ingredients = "Please provide at least 2 ingredients";
@@ -22,13 +19,19 @@ function AddRecipeForm({ onAddRecipe }) {
       newErrors.steps = "Please provide at least 1 preparation step";
 
     setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+    return Object.keys(newErrors).length === 0; // true if valid
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validate()) return; // call validate before submitting
 
     const newRecipe = {
       id: Date.now(),
       title,
-      ingredients: ingredientList,
-      instructions: stepsList,
+      ingredients: ingredients.split("\n").filter(Boolean),
+      instructions: steps.split("\n").filter(Boolean),
     };
 
     onAddRecipe(newRecipe);
@@ -89,7 +92,7 @@ function AddRecipeForm({ onAddRecipe }) {
             )}
           </div>
 
-          {/* Preparation Steps */}
+          {/* Steps */}
           <div>
             <label className="block font-semibold mb-2 text-gray-700">
               Preparation Steps (one per line)
