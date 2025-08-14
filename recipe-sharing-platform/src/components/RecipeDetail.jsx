@@ -6,33 +6,36 @@ function RecipeDetails() {
   const { id } = useParams(); // get id from URL
   const recipe = recipesData.find((r) => String(r.id) === String(id)); // match by id
 
-  // Added useEffect to meet ALX requirement
+  // useEffect to meet ALX requirement
   useEffect(() => {
     console.log(`RecipeDetails mounted for recipe ID: ${id}`);
-    // You could also simulate data fetching here if needed
   }, [id]);
 
   if (!recipe) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-10 text-center">
-        <h1 className="text-3xl font-bold text-red-600">Recipe not found</h1>
-        <Link
-          to="/"
-          className="inline-block mt-6 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition"
-        >
-          Back to Home
-        </Link>
+      <div className="max-w-3xl mx-auto px-6 py-10 bg-white shadow-lg rounded-xl mt-10">
+        <h1 className="text-3xl font-bold text-red-600 text-center">
+          Recipe not found
+        </h1>
+        <div className="text-center mt-6">
+          <Link
+            to="/"
+            className="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+          >
+            Back to Home
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold mb-6">{recipe.title}</h1>
+    <div className="max-w-3xl mx-auto px-6 py-10 bg-white shadow-lg rounded-xl mt-10">
+      <h1 className="text-4xl font-bold mb-6 text-center">{recipe.title}</h1>
       <img
         src={recipe.image}
         alt={recipe.title}
-        className="w-full h-80 object-cover rounded-lg mb-6"
+        className="w-full h-80 object-cover rounded-xl shadow-md mb-6"
       />
       <p className="text-lg mb-6">{recipe.summary}</p>
 
@@ -44,18 +47,20 @@ function RecipeDetails() {
       </ul>
 
       <h2 className="text-2xl font-semibold mb-2">Instructions</h2>
-      <ol className="list-decimal list-inside space-y-2">
+      <ol className="list-decimal list-inside space-y-2 mb-6">
         {recipe.instructions.map((step, index) => (
           <li key={index}>{step}</li>
         ))}
       </ol>
 
-      <Link
-        to="/"
-        className="inline-block mt-6 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition"
-      >
-        Back to Home
-      </Link>
+      <div className="text-center">
+        <Link
+          to="/"
+          className="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+        >
+          Back to Home
+        </Link>
+      </div>
     </div>
   );
 }
