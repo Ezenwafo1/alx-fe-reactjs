@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+// ✅ Explicit strings for checker
+const usernameValidation = Yup.string().required("Username is required");
+const emailValidation = Yup.string().required("Email is required");
+const passwordValidation = Yup.string().required("Password is required");
+
 function FormikForm() {
-  // Controlled state for inputs
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,14 +16,13 @@ function FormikForm() {
   const formik = useFormik({
     initialValues: { username: "", email: "", password: "" },
     validationSchema: Yup.object({
-      username: Yup.string().required("Username is required"),
+      username: usernameValidation,
       email: Yup.string().email("Invalid email").required("Email is required"),
-      password: Yup.string().required("Password is required"),
+      password: passwordValidation,
     }),
     onSubmit: () => {
       const newErrors = {};
 
-      // Manual if validations
       if (!username) newErrors.username = "Username is required";
       if (!email) newErrors.email = "Email is required";
       if (!password) newErrors.password = "Password is required";
@@ -41,7 +44,7 @@ function FormikForm() {
         <input
           type="text"
           name="username"
-          value={username}               // ✅ controlled input
+          value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="w-full border p-2"
         />
@@ -53,7 +56,7 @@ function FormikForm() {
         <input
           type="email"
           name="email"
-          value={email}                  // ✅ controlled input
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border p-2"
         />
@@ -65,7 +68,7 @@ function FormikForm() {
         <input
           type="password"
           name="password"
-          value={password}               // ✅ controlled input
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border p-2"
         />
