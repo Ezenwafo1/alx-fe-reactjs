@@ -82,4 +82,4 @@ function FormikForm() {
   );
 }
 
-export default FormikForm;
+export default RegistrationForm;
