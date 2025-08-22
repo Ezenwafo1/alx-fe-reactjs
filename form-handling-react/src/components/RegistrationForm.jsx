@@ -1,61 +1,57 @@
 import React, { useState } from "react";
 
 function RegistrationForm() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newErrors = {};
 
-    if (!formData.username) {
-      newErrors.username = "Username is required";
+    // Reset errors
+    let formErrors = {};
+
+    if (!username) {
+      formErrors.username = "Username is required";
     }
-    if (!formData.email) {
-      newErrors.email = "Email is required";
+    if (!email) {
+      formErrors.email = "Email is required";
     }
-    if (!formData.password) {
-      newErrors.password = "Password is required";
+    if (!password) {
+      formErrors.password = "Password is required";
     }
 
-    setErrors(newErrors);
+    setErrors(formErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      console.log("Form submitted successfully:", formData);
-      // Reset form after submit
-      setFormData({ username: "", email: "", password: "" });
+    // If no errors, proceed
+    if (Object.keys(formErrors).length === 0) {
+      console.log("Form submitted:", { username, email, password });
+      alert("Registration successful ✅");
+
+      // Reset fields
+      setUsername("");
+      setEmail("");
+      setPassword("");
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-xl space-y-4"
+      className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
     >
-      <h2 className="text-2xl font-bold text-center">Registration Form</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
 
       {/* Username */}
-      <div>
-        <label className="block mb-1">Username:</label>
+      <div className="mb-4">
+        <label className="block mb-1">Username</label>
         <input
           type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-2"
+          value={username}   // ✅ controlled input
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full border p-2 rounded"
+          placeholder="Enter username"
         />
         {errors.username && (
           <p className="text-red-500 text-sm">{errors.username}</p>
@@ -63,14 +59,14 @@ function RegistrationForm() {
       </div>
 
       {/* Email */}
-      <div>
-        <label className="block mb-1">Email:</label>
+      <div className="mb-4">
+        <label className="block mb-1">Email</label>
         <input
           type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-2"
+          value={email}   // ✅ controlled input
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full border p-2 rounded"
+          placeholder="Enter email"
         />
         {errors.email && (
           <p className="text-red-500 text-sm">{errors.email}</p>
@@ -78,14 +74,14 @@ function RegistrationForm() {
       </div>
 
       {/* Password */}
-      <div>
-        <label className="block mb-1">Password:</label>
+      <div className="mb-4">
+        <label className="block mb-1">Password</label>
         <input
           type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-2"
+          value={password}   // ✅ controlled input
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full border p-2 rounded"
+          placeholder="Enter password"
         />
         {errors.password && (
           <p className="text-red-500 text-sm">{errors.password}</p>
@@ -94,7 +90,7 @@ function RegistrationForm() {
 
       <button
         type="submit"
-        className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+        className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded shadow"
       >
         Register
       </button>
