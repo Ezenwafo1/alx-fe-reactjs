@@ -42,7 +42,7 @@ function RegistrationForm() {
         <input
           type="text"
           name="username"
-          value={username}               // ✅ controlled input
+          value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="w-full border p-2"
         />
@@ -54,7 +54,7 @@ function RegistrationForm() {
         <input
           type="email"
           name="email"
-          value={email}                  // ✅ controlled input
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border p-2"
         />
@@ -66,7 +66,7 @@ function RegistrationForm() {
         <input
           type="password"
           name="password"
-          value={password}               // ✅ controlled input
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border p-2"
         />
