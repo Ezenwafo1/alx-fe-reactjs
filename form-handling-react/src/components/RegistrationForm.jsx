@@ -1,41 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-function RegistrationForm() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+function FormikForm() {
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      username: Yup.string().required("Username is required"),
+      email: Yup.string().email("Invalid email").required("Email is required"),
+      password: Yup.string().required("Password is required"),
+    }),
+    onSubmit: (values, { setErrors }) => {
+      let errors = {};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+      // explicit if validation
+      if (!values.username) {
+        errors.username = "Username is required";
+      }
+      if (!values.email) {
+        errors.email = "Email is required";
+      }
+      if (!values.password) {
+        errors.password = "Password is required";
+      }
 
-    let newErrors = {};
+      if (Object.keys(errors).length > 0) {
+        setErrors(errors);
+        return; // stop submission
+      }
 
-    // Explicit if validations
-    if (!username) {
-      newErrors.username = "Username is required";
-    }
-    if (!email) {
-      newErrors.email = "Email is required";
-    }
-    if (!password) {
-      newErrors.password = "Password is required";
-    }
-
-    // If there are errors, set them and stop submission
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    // Clear errors and log success
-    setErrors({});
-    console.log("Form submitted", { username, email, password });
-  };
+      console.log("Form submitted", values);
+    },
+  });
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={formik.handleSubmit}
       className="max-w-md mx-auto p-4 border rounded"
     >
       <div className="mb-4">
@@ -43,12 +47,13 @@ function RegistrationForm() {
         <input
           type="text"
           name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           className="w-full border p-2"
         />
-        {errors.username && (
-          <p className="text-red-500 text-sm">{errors.username}</p>
+        {formik.touched.username && formik.errors.username && (
+          <p className="text-red-500 text-sm">{formik.errors.username}</p>
         )}
       </div>
 
@@ -57,12 +62,13 @@ function RegistrationForm() {
         <input
           type="email"
           name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           className="w-full border p-2"
         />
-        {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email}</p>
+        {formik.touched.email && formik.errors.email && (
+          <p className="text-red-500 text-sm">{formik.errors.email}</p>
         )}
       </div>
 
@@ -71,12 +77,13 @@ function RegistrationForm() {
         <input
           type="password"
           name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           className="w-full border p-2"
         />
-        {errors.password && (
-          <p className="text-red-500 text-sm">{errors.password}</p>
+        {formik.touched.password && formik.errors.password && (
+          <p className="text-red-500 text-sm">{formik.errors.password}</p>
         )}
       </div>
 
@@ -84,10 +91,10 @@ function RegistrationForm() {
         type="submit"
         className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow"
       >
-        Register
+        Submit
       </button>
     </form>
   );
 }
 
-export default RegistrationForm;
+export default FormikForm;
