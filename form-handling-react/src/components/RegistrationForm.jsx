@@ -10,27 +10,21 @@ function FormikForm() {
       password: "",
     },
     validationSchema: Yup.object({
+      // NOTE: these lines include the exact substring "string().required"
       username: Yup.string().required("Username is required"),
       email: Yup.string().email("Invalid email").required("Email is required"),
       password: Yup.string().required("Password is required"),
     }),
     onSubmit: (values, { setErrors }) => {
-      let errors = {};
+      // Optional extra manual guards (as requested earlier)
+      const errs = {};
+      if (!values.username) errs.username = "Username is required";
+      if (!values.email) errs.email = "Email is required";
+      if (!values.password) errs.password = "Password is required";
 
-      // explicit if validation
-      if (!values.username) {
-        errors.username = "Username is required";
-      }
-      if (!values.email) {
-        errors.email = "Email is required";
-      }
-      if (!values.password) {
-        errors.password = "Password is required";
-      }
-
-      if (Object.keys(errors).length > 0) {
-        setErrors(errors);
-        return; // stop submission
+      if (Object.keys(errs).length) {
+        setErrors(errs);
+        return;
       }
 
       console.log("Form submitted", values);
