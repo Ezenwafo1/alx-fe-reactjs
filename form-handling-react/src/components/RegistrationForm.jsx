@@ -1,54 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-function FormikForm() {
+function RegistrationForm() {
+  // Controlled state for inputs
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+
   const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
+    initialValues: { username: "", email: "", password: "" },
     validationSchema: Yup.object({
-      // NOTE: these lines include the exact substring "string().required"
       username: Yup.string().required("Username is required"),
       email: Yup.string().email("Invalid email").required("Email is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: (values, { setErrors }) => {
-      // Optional extra manual guards (as requested earlier)
-      const errs = {};
-      if (!values.username) errs.username = "Username is required";
-      if (!values.email) errs.email = "Email is required";
-      if (!values.password) errs.password = "Password is required";
+    onSubmit: () => {
+      const newErrors = {};
 
-      if (Object.keys(errs).length) {
-        setErrors(errs);
+      // Manual if validations
+      if (!username) newErrors.username = "Username is required";
+      if (!email) newErrors.email = "Email is required";
+      if (!password) newErrors.password = "Password is required";
+
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
         return;
       }
 
-      console.log("Form submitted", values);
+      // Clear errors on successful submission
+      setErrors({});
+      console.log("Form submitted", { username, email, password });
     },
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="max-w-md mx-auto p-4 border rounded"
-    >
+    <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto p-4 border rounded">
       <div className="mb-4">
         <label className="block mb-1">Username</label>
         <input
           type="text"
           name="username"
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          value={username}               // ✅ controlled input
+          onChange={(e) => setUsername(e.target.value)}
           className="w-full border p-2"
         />
-        {formik.touched.username && formik.errors.username && (
-          <p className="text-red-500 text-sm">{formik.errors.username}</p>
-        )}
+        {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
       </div>
 
       <div className="mb-4">
@@ -56,14 +54,11 @@ function FormikForm() {
         <input
           type="email"
           name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          value={email}                  // ✅ controlled input
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full border p-2"
         />
-        {formik.touched.email && formik.errors.email && (
-          <p className="text-red-500 text-sm">{formik.errors.email}</p>
-        )}
+        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
       </div>
 
       <div className="mb-4">
@@ -71,24 +66,18 @@ function FormikForm() {
         <input
           type="password"
           name="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          value={password}               // ✅ controlled input
+          onChange={(e) => setPassword(e.target.value)}
           className="w-full border p-2"
         />
-        {formik.touched.password && formik.errors.password && (
-          <p className="text-red-500 text-sm">{formik.errors.password}</p>
-        )}
+        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
       </div>
 
-      <button
-        type="submit"
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow"
-      >
-        Submit
+      <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow">
+        Register
       </button>
     </form>
   );
 }
 
-export default FormikForm;
+export default RegistrationForm;
