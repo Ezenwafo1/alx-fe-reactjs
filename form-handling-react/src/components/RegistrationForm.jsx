@@ -4,24 +4,32 @@ function RegistrationForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    let newErrors = {};
+
     // Explicit if validations
     if (!username) {
-      alert("Username is required");
-      return;
+      newErrors.username = "Username is required";
     }
     if (!email) {
-      alert("Email is required");
-      return;
+      newErrors.email = "Email is required";
     }
     if (!password) {
-      alert("Password is required");
+      newErrors.password = "Password is required";
+    }
+
+    // If there are errors, set them and stop submission
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
+    // Clear errors and log success
+    setErrors({});
     console.log("Form submitted", { username, email, password });
   };
 
@@ -39,6 +47,9 @@ function RegistrationForm() {
           onChange={(e) => setUsername(e.target.value)}
           className="w-full border p-2"
         />
+        {errors.username && (
+          <p className="text-red-500 text-sm">{errors.username}</p>
+        )}
       </div>
 
       <div className="mb-4">
@@ -50,6 +61,9 @@ function RegistrationForm() {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border p-2"
         />
+        {errors.email && (
+          <p className="text-red-500 text-sm">{errors.email}</p>
+        )}
       </div>
 
       <div className="mb-4">
@@ -61,11 +75,14 @@ function RegistrationForm() {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border p-2"
         />
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password}</p>
+        )}
       </div>
 
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow"
+        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow"
       >
         Register
       </button>
