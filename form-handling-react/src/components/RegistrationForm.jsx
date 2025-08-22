@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-function RegistrationForm() {
+function FormikForm() {
   // Controlled state for inputs
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -29,9 +29,8 @@ function RegistrationForm() {
         return;
       }
 
-      // Clear errors on successful submission
       setErrors({});
-      console.log("Form submitted", { username, email, password });
+      console.log("Formik form submitted", { username, email, password });
     },
   });
 
@@ -42,7 +41,7 @@ function RegistrationForm() {
         <input
           type="text"
           name="username"
-          value={username}
+          value={username}               // ✅ controlled input
           onChange={(e) => setUsername(e.target.value)}
           className="w-full border p-2"
         />
@@ -54,7 +53,7 @@ function RegistrationForm() {
         <input
           type="email"
           name="email"
-          value={email}
+          value={email}                  // ✅ controlled input
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border p-2"
         />
@@ -66,7 +65,7 @@ function RegistrationForm() {
         <input
           type="password"
           name="password"
-          value={password}
+          value={password}               // ✅ controlled input
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border p-2"
         />
@@ -74,10 +73,10 @@ function RegistrationForm() {
       </div>
 
       <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow">
-        Register
+        Submit
       </button>
     </form>
   );
 }
 
-export default RegistrationForm;
+export default FormikForm;
