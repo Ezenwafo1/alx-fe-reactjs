@@ -1,94 +1,98 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import React, { useState } from "react";
 
-const FormikForm = () => {
-  const initialValues = {
-    username: "",
-    email: "",
-    password: "",
-  };
+function RegistrationForm() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
-  const validationSchema = Yup.object({
-    username: Yup.string().required("Username is required"),
-    email: Yup.string().email("Invalid email format").required("Email is required"),
-    password: Yup.string().required("Password is required"),
-  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = {};
 
-  const handleSubmit = (values, { resetForm }) => {
-    console.log("Form data", values);
-    alert("Formik form submitted ✅");
-    resetForm();
+    if (!username.trim()) newErrors.username = "Username is required";
+    if (!email.trim()) newErrors.email = "Email is required";
+    if (!password.trim()) newErrors.password = "Password is required";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      console.log("Form submitted:", { username, email, password });
+      alert("Registration successful ✅");
+      setUsername("");
+      setEmail("");
+      setPassword("");
+    }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center">Formik Form</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Registration Form</h2>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form className="space-y-4">
-          {/* Username */}
-          <div>
-            <label className="block font-medium">Username</label>
-            <Field
-              type="text"
-              name="username"
-              className="w-full border p-2 rounded"
-              placeholder="Enter username"
-            />
-            <ErrorMessage
-              name="username"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="username" className="block font-medium mb-1">
+            Username
+          </label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full border p-2 rounded"
+            placeholder="Enter username"
+          />
+          {errors.username && (
+            <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+          )}
+        </div>
 
-          {/* Email */}
-          <div>
-            <label className="block font-medium">Email</label>
-            <Field
-              type="email"
-              name="email"
-              className="w-full border p-2 rounded"
-              placeholder="Enter email"
-            />
-            <ErrorMessage
-              name="email"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
+        <div>
+          <label htmlFor="email" className="block font-medium mb-1">
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border p-2 rounded"
+            placeholder="Enter email"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+          )}
+        </div>
 
-          {/* Password */}
-          <div>
-            <label className="block font-medium">Password</label>
-            <Field
-              type="password"
-              name="password"
-              className="w-full border p-2 rounded"
-              placeholder="Enter password"
-            />
-            <ErrorMessage
-              name="password"
-              component="p"
-              className="text-red-500 text-sm"
-            />
-          </div>
+        <div>
+          <label htmlFor="password" className="block font-medium mb-1">
+            Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border p-2 rounded"
+            placeholder="Enter password"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+          )}
+        </div>
 
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 shadow-md"
-          >
-            Register
-          </button>
-        </Form>
-      </Formik>
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 shadow-md"
+        >
+          Register
+        </button>
+      </form>
     </div>
   );
-};
+}
 
-export default FormikForm;
+export default RegistrationForm;
