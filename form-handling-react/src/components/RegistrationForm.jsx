@@ -1,89 +1,104 @@
-// src/components/RegistrationForm.jsx
 import React, { useState } from "react";
 
 function RegistrationForm() {
-  // Separate states for each field
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  // Handle form submission with validation
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    let newErrors = {};
 
-    // Basic validation
-    if (!username || !email || !password) {
-      setError("All fields are required!");
-      return;
+    if (!formData.username) {
+      newErrors.username = "Username is required";
+    }
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    }
+    if (!formData.password) {
+      newErrors.password = "Password is required";
     }
 
-    // Clear error if validation passes
-    setError("");
+    setErrors(newErrors);
 
-    console.log("Form Submitted:", { username, email, password });
-    alert(`Registration Successful!\nWelcome, ${username}`);
-
-    // Reset form
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    if (Object.keys(newErrors).length === 0) {
+      console.log("Form submitted successfully:", formData);
+      // Reset form after submit
+      setFormData({ username: "", email: "", password: "" });
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-center text-green-600">
-        Registration Form
-      </h2>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-xl space-y-4"
+    >
+      <h2 className="text-2xl font-bold text-center">Registration Form</h2>
 
-      {/* Show error message */}
-      {error && (
-        <p className="text-red-600 text-center mb-4 font-medium">{error}</p>
-      )}
+      {/* Username */}
+      <div>
+        <label className="block mb-1">Username:</label>
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          className="w-full border rounded-lg p-2"
+        />
+        {errors.username && (
+          <p className="text-red-500 text-sm">{errors.username}</p>
+        )}
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Username */}
-        <div>
-          <label className="block font-medium mb-1">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400"
-          />
-        </div>
+      {/* Email */}
+      <div>
+        <label className="block mb-1">Email:</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full border rounded-lg p-2"
+        />
+        {errors.email && (
+          <p className="text-red-500 text-sm">{errors.email}</p>
+        )}
+      </div>
 
-        {/* Email */}
-        <div>
-          <label className="block font-medium mb-1">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400"
-          />
-        </div>
+      {/* Password */}
+      <div>
+        <label className="block mb-1">Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          className="w-full border rounded-lg p-2"
+        />
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password}</p>
+        )}
+      </div>
 
-        {/* Password */}
-        <div>
-          <label className="block font-medium mb-1">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400"
-          />
-        </div>
-
-        {/* Submit button */}
-        <button
-          type="submit"
-          className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition shadow"
-        >
-          Register
-        </button>
-      </form>
-    </div>
+      <button
+        type="submit"
+        className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+      >
+        Register
+      </button>
+    </form>
   );
 }
 
