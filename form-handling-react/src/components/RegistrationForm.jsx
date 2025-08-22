@@ -38,6 +38,7 @@ function RegistrationForm() {
       onSubmit={formik.handleSubmit}
       className="max-w-md mx-auto p-4 border rounded"
     >
+      {/* Username */}
       <div className="mb-4">
         <label className="block mb-1">Username</label>
         <input
@@ -53,6 +54,7 @@ function RegistrationForm() {
         )}
       </div>
 
+      {/* Email */}
       <div className="mb-4">
         <label className="block mb-1">Email</label>
         <input
@@ -68,6 +70,7 @@ function RegistrationForm() {
         )}
       </div>
 
+      {/* Password */}
       <div className="mb-4">
         <label className="block mb-1">Password</label>
         <input
@@ -83,6 +86,7 @@ function RegistrationForm() {
         )}
       </div>
 
+      {/* Submit button */}
       <button
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow"
