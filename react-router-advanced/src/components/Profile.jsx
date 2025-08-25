@@ -3,6 +3,23 @@ import { Routes, Route, Link } from "react-router-dom";
 import ProfileDetails from "./ProfileDetails.jsx";
 import ProfileSettings from "./ProfileSettings.jsx";
 
+const Profile = () => (
+  <div>
+    <h1>Profile Page</h1>
+    <nav>
+      <Link to="details">Details</Link>
+      <Link to="settings">Settings</Link>
+    </nav>
+    <Outlet />
+  </div>
+);
+
+export default Profile;
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import ProfileDetails from "./ProfileDetails.jsx";
+import ProfileSettings from "./ProfileSettings.jsx";
+
 const Profile = () => {
   return (
     <div>
