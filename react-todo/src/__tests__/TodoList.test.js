@@ -1,37 +1,40 @@
-// src/__tests__/TodoApp.test.js
+// src/__tests__/TodoList.test.js
 import { render, screen, fireEvent } from "@testing-library/react";
-import TodoApp from "../components/TodoApp";
+import TodoList from "../components/TodoList";
 
-describe("TodoApp Component", () => {
+describe("TodoList Component", () => {
   test("renders initial todos", () => {
-    render(<TodoApp />);
+    render(<TodoList />);
     expect(screen.getByText(/Learn React/i)).toBeInTheDocument();
     expect(screen.getByText(/Build a Todo App/i)).toBeInTheDocument();
   });
 
-  test("toggles a todo as completed", () => {
-    render(<TodoApp />);
-    const todoItem = screen.getByText(/Learn React/i);
-    fireEvent.click(todoItem);
-    expect(todoItem).toHaveClass("completed"); // assumes completed adds a class
-  });
-
-  test("deletes a todo", () => {
-    render(<TodoApp />);
-    const todoItem = screen.getByText(/Build a Todo App/i);
-    const deleteButton = screen.getByLabelText("delete-Build a Todo App");
-    fireEvent.click(deleteButton);
-    expect(todoItem).not.toBeInTheDocument();
-  });
-
   test("adds a new todo", () => {
-    render(<TodoApp />);
+    render(<TodoList />);
     const input = screen.getByPlaceholderText(/add a new todo/i);
-    const button = screen.getByText(/Add/i);
+    const button = screen.getByText(/add/i);
 
     fireEvent.change(input, { target: { value: "Write tests" } });
     fireEvent.click(button);
 
     expect(screen.getByText(/Write tests/i)).toBeInTheDocument();
+  });
+
+  test("toggles a todo", () => {
+    render(<TodoList />);
+    const todoItem = screen.getByText(/Learn React/i);
+    expect(todoItem).toHaveStyle("text-decoration: none");
+
+    fireEvent.click(todoItem);
+    expect(todoItem).toHaveStyle("text-decoration: line-through");
+  });
+
+  test("deletes a todo", () => {
+    render(<TodoList />);
+    const todoItem = screen.getByText(/Build a Todo App/i);
+    const deleteButton = screen.getByLabelText(/delete-2/i);
+
+    fireEvent.click(deleteButton);
+    expect(todoItem).not.toBeInTheDocument();
   });
 });
