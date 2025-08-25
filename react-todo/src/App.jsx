@@ -1,14 +1,12 @@
-// src/App.js
+// src/App.jsx
 import React from "react";
 import TodoList from "./components/TodoList";
 
-function App() {
+export default function App() {
   return (
     <div>
-      <h1>React Todo App</h1>
+      <h1>My ALX Todo App</h1>
       <TodoList />
     </div>
   );
 }
-
-export default App;
