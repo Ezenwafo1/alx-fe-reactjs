@@ -1,46 +1,37 @@
-import React from "react";
+// src/__tests__/TodoApp.test.js
 import { render, screen, fireEvent } from "@testing-library/react";
-import TodoList from "../components/TodoList";
-import AddTodoForm from "../components/AddTodoForm";
+import TodoApp from "../components/TodoApp";
 
-describe("TodoList Component", () => {
+describe("TodoApp Component", () => {
   test("renders initial todos", () => {
-    render(<TodoList />);
+    render(<TodoApp />);
     expect(screen.getByText(/Learn React/i)).toBeInTheDocument();
     expect(screen.getByText(/Build a Todo App/i)).toBeInTheDocument();
   });
 
-  test("can toggle a todo item", () => {
-    render(<TodoList />);
+  test("toggles a todo as completed", () => {
+    render(<TodoApp />);
     const todoItem = screen.getByText(/Learn React/i);
-
-    // Click to toggle
     fireEvent.click(todoItem);
-
-    // Check if line-through applied
-    expect(todoItem).toHaveStyle("text-decoration: line-through");
+    expect(todoItem).toHaveClass("completed"); // assumes completed adds a class
   });
 
-  test("can delete a todo item", () => {
-    render(<TodoList />);
-    const deleteButton = screen.getAllByText(/Delete/i)[0];
-
+  test("deletes a todo", () => {
+    render(<TodoApp />);
+    const todoItem = screen.getByText(/Build a Todo App/i);
+    const deleteButton = screen.getByLabelText("delete-Build a Todo App");
     fireEvent.click(deleteButton);
-
-    expect(screen.queryByText(/Learn React/i)).not.toBeInTheDocument();
+    expect(todoItem).not.toBeInTheDocument();
   });
-});
 
-describe("AddTodoForm Component", () => {
-  test("can add a new todo", () => {
-    render(<TodoList />);
+  test("adds a new todo", () => {
+    render(<TodoApp />);
+    const input = screen.getByPlaceholderText(/add a new todo/i);
+    const button = screen.getByText(/Add/i);
 
-    const input = screen.getByPlaceholderText(/Add a new todo/i);
-    const addButton = screen.getByText(/Add Todo/i);
+    fireEvent.change(input, { target: { value: "Write tests" } });
+    fireEvent.click(button);
 
-    fireEvent.change(input, { target: { value: "New Todo Item" } });
-    fireEvent.click(addButton);
-
-    expect(screen.getByText(/New Todo Item/i)).toBeInTheDocument();
+    expect(screen.getByText(/Write tests/i)).toBeInTheDocument();
   });
 });
