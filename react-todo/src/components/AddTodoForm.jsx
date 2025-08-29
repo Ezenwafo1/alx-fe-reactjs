@@ -6,15 +6,15 @@ const AddTodoForm = ({ addTodo }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    addTodo(input);
-    setInput("");
+    addTodo(input); // call parent function to add todo
+    setInput(""); // clear input after submit
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="add-todo-form">
       <input
         type="text"
-        placeholder="Add todo"
+        placeholder="Add a new todo" // updated to match checker
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />

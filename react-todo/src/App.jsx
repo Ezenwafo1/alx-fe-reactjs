@@ -5,9 +5,10 @@ import AddTodoForm from "./components/AddTodoForm";
 const App = () => {
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Build a Todo App", completed: false },
+    { id: 2, text: "Build Todo App", completed: false },
   ]);
 
+  // Add a new todo
   const addTodo = (text) => {
     const newTodo = {
       id: todos.length + 1,
@@ -17,6 +18,7 @@ const App = () => {
     setTodos([...todos, newTodo]);
   };
 
+  // Toggle completed status
   const toggleTodo = (id) => {
     setTodos(
       todos.map((todo) =>
@@ -25,6 +27,7 @@ const App = () => {
     );
   };
 
+  // Delete a todo
   const deleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
