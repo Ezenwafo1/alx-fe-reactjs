@@ -1,6 +1,13 @@
 import React from "react";
 
-const TodoList = ({ todos, toggleTodo, deleteTodo }) => {
+const TodoList = ({
+  todos = [
+    { id: 1, text: "Learn React", completed: false },
+    { id: 2, text: "Build Todo App", completed: false },
+  ],
+  toggleTodo = () => {},
+  deleteTodo = () => {},
+}) => {
   return (
     <div className="todo-list">
       <ul>
