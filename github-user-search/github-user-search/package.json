@@ -1,9 +1,9 @@
-"tailwindcss"
 {
   "name": "github-user-search",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "tailwindcss",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
