@@ -1,3 +1,4 @@
+@tailwindcss
 {
   "name": "github-user-search",
   "private": true,
