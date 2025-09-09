@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
+=======
+import { fetchUserData } from '../services/githubService';
+>>>>>>> 07a04b4 (fixed erorr with packagejson)
 
 function SearchBar() {
   const [username, setUsername] = useState('');
