@@ -7,15 +7,15 @@ import AddRecipeForm from "./AddRecipeForm";
 function HomePage() {
   const [recipes, setRecipes] = useState([]);
 
-  // ✅ useEffect to load initial data
+  // load initial data on mount
   useEffect(() => {
     setRecipes(recipesData);
-    console.log("Recipes loaded"); // optional, shows it's being used
+    console.log("Recipes loaded");
   }, []);
 
   // Handler to add a new recipe
   const handleAddRecipe = (newRecipe) => {
-    setRecipes([newRecipe, ...recipes]); // add new recipe at the top
+    setRecipes((prev) => [newRecipe, ...prev]); // functional update to avoid stale state
   };
 
   return (
@@ -26,7 +26,7 @@ function HomePage() {
       </h1>
 
       {/* Recipes List */}
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         {recipes.map((recipe) => (
           <div
             key={recipe.id}
