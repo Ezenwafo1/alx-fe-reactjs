@@ -1,11 +1,16 @@
 // src/components/HomePage.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import recipesData from "../data.json";
 import AddRecipeForm from "./AddRecipeForm";
 
 function HomePage() {
-  const [recipes, setRecipes] = useState(recipesData);
+  const [recipes, setRecipes] = useState([]);
+
+  // ✅ useEffect to load initial data
+  useEffect(() => {
+    setRecipes(recipesData);
+  }, []);
 
   // Handler to add a new recipe
   const handleAddRecipe = (newRecipe) => {
