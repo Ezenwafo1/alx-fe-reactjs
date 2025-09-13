@@ -10,6 +10,7 @@ function HomePage() {
   // ✅ useEffect to load initial data
   useEffect(() => {
     setRecipes(recipesData);
+    console.log("Recipes loaded"); // optional, shows it's being used
   }, []);
 
   // Handler to add a new recipe
@@ -25,7 +26,7 @@ function HomePage() {
       </h1>
 
       {/* Recipes List */}
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {recipes.map((recipe) => (
           <div
             key={recipe.id}
