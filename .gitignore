@@ -25,6 +25,11 @@ dist-ssr
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+.env
+>>>>>>> 07a04b4 (fixed erorr with packagejson)
+>>>>>>> bcbdd9b5706d99818c7ef9d01862caa36be536b2
 =======
 .env
 >>>>>>> 07a04b4 (fixed erorr with packagejson)

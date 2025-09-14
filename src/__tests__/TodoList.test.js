@@ -11,13 +11,17 @@ describe("TodoList Component", () => {
   const toggleTodo = jest.fn();
   const deleteTodo = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   test("renders initial todos", () => {
     render(
       <TodoList todos={mockTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
     );
 
-    expect(screen.getByText(/Learn React/i)).toBeInTheDocument();
-    expect(screen.getByText(/Build Todo App/i)).toBeInTheDocument();
+    expect(screen.getByText("Learn React")).toBeInTheDocument();
+    expect(screen.getByText("Build Todo App")).toBeInTheDocument();
   });
 
   test("toggles a todo when clicked", () => {
@@ -25,9 +29,9 @@ describe("TodoList Component", () => {
       <TodoList todos={mockTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
     );
 
-    const todoItem = screen.getByText(/Learn React/i);
+    const todoItem = screen.getByText("Learn React");
 
-    // Initial state (not completed)
+    // Ensure initial style
     expect(todoItem).toHaveStyle("text-decoration: none");
 
     fireEvent.click(todoItem);
